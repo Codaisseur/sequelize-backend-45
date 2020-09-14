@@ -1,0 +1,20 @@
+{
+  "development": {
+    "url": "postgres://pmkmbtou:kL-nzV0hs9EIL13cXExD-ksUcX_2PKvd@balarama.db.elephantsql.com:5432/pmkmbtou",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
