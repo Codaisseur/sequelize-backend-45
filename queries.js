@@ -1,5 +1,7 @@
 const User = require("./models").user;
+
 const TodoItem = require("./models").todoItem;
+const TodoList = require("./models").todoList;
 
 const getAllUsers = async () => {
   try {
@@ -32,10 +34,34 @@ const getImportantTodoItems = async () => {
   }
 };
 
-getImportantTodoItems();
+// getImportantTodoItems();
 
+const getListAndItems = async id => {
+  try {
+    const list = await TodoList.findByPk(id, {
+      include: [{ model: TodoItem, attributes: ["task", "important"] }],
+    });
+    console.log(list.get({ plain: true }));
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+// getListAndItems(1);
 /*
 findAll() => []
 findByPk() => {} || null || undefined
 findAndCountAll() => [] with some other information
 */
+
+const getUserAndStuff = async id => {
+  try {
+    const user = await User.findByPk(id, {
+      include: [{ model: TodoList, include: [TodoItem] }],
+    });
+    console.log(user.get({ plain: true }));
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+getUserAndStuff(2);

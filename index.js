@@ -14,4 +14,4 @@ app.get("/lists", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => console.log("server running!"));
+app.listen(PORT, event => console.log("server running!"));
