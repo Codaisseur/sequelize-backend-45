@@ -10,6 +10,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       todoItem.belongsTo(models.todoList);
+      todoItem.belongsToMany(models.tag, {
+        through: "itemTags",
+        foreignKey: "todoItemId",
+      });
     }
   }
   todoItem.init(
