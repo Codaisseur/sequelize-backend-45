@@ -2,6 +2,7 @@ const User = require("./models").user;
 
 const TodoItem = require("./models").todoItem;
 const TodoList = require("./models").todoList;
+const Tag = require("./models").tag;
 
 const getAllUsers = async () => {
   try {
@@ -64,4 +65,17 @@ const getUserAndStuff = async id => {
   }
 };
 
-getUserAndStuff(2);
+// getUserAndStuff(2);
+
+const itemWithTags = async id => {
+  try {
+    const item = await TodoItem.findByPk(id, {
+      include: [Tag],
+    });
+    console.log(item.get({ plain: true }));
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+itemWithTags(2);
