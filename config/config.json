@@ -1,6 +1,6 @@
 {
   "development": {
-    "url": "postgres://pmkmbtou:kL-nzV0hs9EIL13cXExD-ksUcX_2PKvd@balarama.db.elephantsql.com:5432/pmkmbtou",
+    "url": "postgres://gahbwbhr:Q1OB118htM1lUJK-GB5uBlq0dm7Vle9n@hattie.db.elephantsql.com:5432/gahbwbhr",
     "dialect": "postgres"
   },
   "test": {
@@ -18,3 +18,4 @@
     "dialect": "mysql"
   }
 }
+
