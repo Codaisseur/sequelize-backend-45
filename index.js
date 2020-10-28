@@ -1,22 +1,25 @@
 const express = require("express");
+const User = require("./models").user;
 const app = express();
-const PORT = 4000;
+const PORT = 4001;
 
 const userRouter = require("./routers/user");
-const listRouter = require("./routers/lists");
 
-const { loggingMiddleware, randomBlockMiddleware } = require("./middlewares");
+const logMyRequestMiddleware = (req, res, next) => {
+  console.log("request recieved", req.headers);
+  // check the authorization of the request
+  //
+  next();
+};
 
-// Attach Middlewares
-app.use(express.json()); //body-parser
-app.use(loggingMiddleware); // use middleware at application level.
+// Middlewares
+// 1. At route level
+// 2. At app level
+app.use(express.json()); // body=parser
+app.use(logMyRequestMiddleware); // at app level
 
-// attach routers to app.
+// Routers
 app.use("/users", userRouter);
-app.use("/lists", listRouter);
+// app.use('/lists', todoListRouter);
 
-app.get("/test", randomBlockMiddleware, (req, res, next) => {
-  res.json("this is the testing route");
-});
-
-app.listen(PORT, () => console.log("server running!"));
+app.listen(PORT, () => console.log(`up and running on ${PORT}`));

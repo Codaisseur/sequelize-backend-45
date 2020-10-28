@@ -1,61 +1,53 @@
 const { Router } = require("express");
 const User = require("../models").user;
+const { randomBlockMiddleware } = require("../middlewares");
 
 const router = new Router();
 
-router.get("/", async (req, res, next) => {
-  console.log("im in the router!!!");
+router.get("/", randomBlockMiddleware, async (req, res, next) => {
   try {
     const users = await User.findAll();
-    res.send(users);
+    const cleanUsers = users.map(u => {
+      const { password, ...restOfUser } = u.dataValues;
+      return restOfUser;
+    });
+    res.send(cleanUsers);
   } catch (e) {
     next(e);
   }
 });
 
-router.post("/", async (request, response, next) => {
+router.patch("/:id", async (req, res, next) => {
   try {
-    console.log("body", request.body);
-    const { email, name, phone } = request.body;
-    if (!email) {
-      response.status(400).send("email must be provided");
-    } else {
-      const newUser = await User.create({ email, name, phone });
-      // BODY of the request.
-      // name, email, phone
-      response.json(newUser);
+    const { id } = req.params;
+    const { name, email, phone } = req.body;
+
+    const user = await User.findByPk(id);
+    if (!name && !email && !phone) {
+      return res.status(400).send("missing parameters");
     }
-    // USer Model and .create
-    // respond with the new user
-  } catch (error) {
-    next(error);
+    if (!user) {
+      return res.status(404).send("User with that id does not exist");
+    }
+
+    await user.update({ name });
+
+    res.send(user);
+  } catch (e) {
+    next(e);
   }
 });
 
-router.put("/:id", async (req, res, next) => {
-  console.log("im in the router!!!");
+router.post("/", async (req, res, next) => {
   try {
-    console.log("req params", req.params);
-    console.log("req body", req.body);
+    const { name, email, password } = req.body;
 
-    // validate params
-    const { name } = req.body;
-    if (!name) {
-      return res.status(400).send("missing name");
+    if (!name || !email || !password) {
+      return res.status(400).send("missing parameters");
     }
+    const newUser = await User.create({ name, email, password });
 
-    // Find the user
-    const user = await User.findByPk(req.params.id);
-
-    if (!user) {
-      return res.status(404).send(`User with id: ${req.params.id} not found`);
-    }
-
-    // update him
-    await user.update({ name });
-    // console.log(user.get({ plain: true }));
-    // respond
-    res.json(user);
+    res.send(newUser);
   } catch (e) {
     next(e);
   }
