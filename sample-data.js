@@ -22,3 +22,61 @@ async function createSampleTodoItems() {
 }
 
 createSampleTodoItems().then(todos => console.log(todos));
+
+/*
+[
+        {
+          title: "urgent",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          title: "personal",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          title: "work related",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ],
+
+
+           [
+        {
+          tagId: 1,
+          todoItemId: 1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          tagId: 2,
+          todoItemId: 1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          tagId: 3,
+          todoItemId: 2,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          tagId: 2,
+          todoItemId: 2,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          tagId: 1,
+          todoItemId: 2,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ],
+
+
+
+
+*/

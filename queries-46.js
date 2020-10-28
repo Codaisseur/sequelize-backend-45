@@ -1,12 +1,11 @@
 const User = require("./models").user;
+const Tag = require("./models").tag;
 const { todoItem: TodoItem, todoList: List } = require("./models");
 
 const oneUser = async id => {
   const user = await User.findByPk(id); // => {} || null
   console.log(user.get({ plain: true }));
 };
-
-// oneUser(1);
 
 const importantItems = async () => {
   try {
@@ -49,3 +48,15 @@ const deleteUser = async id => {
 };
 
 // deleteUser(1);
+
+const itemsAndTags = async () => {
+  try {
+    const allItems = await TodoItem.findAll({ include: [Tag] });
+    const cleanedArray = allItems.map(i => i.get({ plain: true }));
+    console.log(cleanedArray[0]);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+itemsAndTags();
